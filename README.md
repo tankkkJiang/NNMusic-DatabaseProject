@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # NNMusic 音乐播放软件
 
 ## 简介
@@ -135,3 +136,10 @@
 
 1. **综合搜索与筛选功能**：用户可以通过关键词结合多种筛选条件（如国籍、性别、语言、风格）进行精准搜索，大幅提升查找效率和用户体验。
 2. **动态收藏管理**：实时添加或移除收藏歌曲，系统即时更新收藏状态，并在歌曲列表中动态显示，增强用户互动性。
+=======
+# NNMusic-DatabaseProject
+
+This Dababase Project "NN-Music" is proudly devised by Xie Jiaxuan, Jiang Zhenglan, Hu Yucheng.  
+The project is based on the implementation of a database system using the openGauss database under the openEuler operating system, which is a major assignment for the undergraduate course on Database System Principles.  
+This repository contains the front-end and back-end related to the database system, and ultimately uses the content of this database to implement a visual web page, with the relevant code provided for reference.
+>>>>>>> 8697499173b09554adab0db4f883d8d61d5ee4d0
