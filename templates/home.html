@@ -37,18 +37,25 @@
             text-decoration: none;
         }
 
+        /* 主内容区 */
+        .main-container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 80px auto 30px auto; /* 顶部导航栏高度 + 底部间距 */
+        }
+
         /* 封面图片容器 */
         .cover-container {
             width: 90%;
             max-width: 1200px;
-            margin: 80px auto 30px auto; /* 顶部导航栏高度 + 底部间距 */
+            margin: 0 auto 30px auto;
             padding: 10px;
         }
 
         /* 封面图片 */
         .cover-image {
             width: 100%;
-            max-height: 300px; /* 缩小高度 */
+            max-height: 300px;
             object-fit: cover;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
@@ -57,13 +64,6 @@
 
         .cover-image:hover {
             transform: scale(1.02);
-        }
-
-        /* 主内容区 */
-        .main-container {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
         /* 中央搜索框和筛选选项 */
@@ -118,7 +118,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-                justify-content: center;
+            justify-content: center;
         }
 
         .filters select {
@@ -310,6 +310,16 @@
             transform: scale(1.05);
         }
 
+        /* 新增的退出登录按钮样式 */
+        .fixed-buttons .logout-button {
+            background: #e0245e; /* 红色 */
+        }
+
+        .fixed-buttons .logout-button:hover {
+            background-color: #c21f4a;
+            transform: scale(1.05);
+        }
+
         /* 响应式设计 */
         @media (max-width: 768px) {
             .navbar {
@@ -449,6 +459,8 @@
         <a href="/profile/{{ user_id }}" class="profile-button">我的资料</a>
         <a href="/favorites/{{ user_name }}" class="favorites-button">我的收藏</a>
         <a href="/community" class="community-button">社区</a> <!-- 新增社区按钮 -->
+        <!-- 新增的退出登录按钮 -->
+        <a href="/logout" class="logout-button">退出登录</a>
     </div>
 
     <script>

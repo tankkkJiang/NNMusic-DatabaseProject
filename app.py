@@ -15,6 +15,14 @@ def index():
     return redirect('/login')
 
 
+@app.route('/logout')
+def logout():
+    # 清除用户会话数据
+    session.clear()
+    # 重定向到登录页面
+    return redirect(url_for('login'))
+
+
 # 注册页面的路由
 @app.route('/register', methods=['GET', 'POST'])
 @app.route('/register.html', methods=['GET', 'POST'])
@@ -23,33 +31,50 @@ def register():
         # 获取表单数据
         user_name = request.form['user_name']
         password = request.form['password']
+        confirm_password = request.form.get('confirm_password')
         email = request.form['email']
         tel = request.form['tel']
-        year = int(request.form['year'])
-        month = int(request.form['month'])
-        day = int(request.form['day'])
+        year = request.form['year']
+        month = request.form['month']
+        day = request.form['day']
 
-        # 检查用户名是否已存在
-        with db.get_db_connection() as connection:
-            cursor = connection.cursor()
-            cursor.execute("SELECT user_name FROM Users WHERE user_name = %s", (user_name,))
-            existing_user = cursor.fetchone()
-            cursor.close()
-
-        if existing_user:
-            flash("用户名已存在，请选择其他用户名。", "error")
-            print(f"注册失败：用户名 '{user_name}' 已存在。")
+        # 检查密码和确认密码是否一致
+        if password != confirm_password:
+            flash("密码和确认密码不一致，请重新输入。", "error")
             return redirect(url_for('register'))
 
-        # 哈希密码
-        hashed_password = generate_password_hash(password)
+        # 检查用户名是否已存在
+        try:
+            with db.get_db_connection() as connection:
+                cursor = connection.cursor()
+                cursor.execute("SELECT user_name FROM Users WHERE user_name = %s", (user_name,))
+                existing_user = cursor.fetchone()
 
-        print(f"注册新用户: {user_name}, 哈希密码: {hashed_password}, 邮箱: {email}, 电话: {tel}, 生日: {year}-{month}-{day}")
-        db.insert_user(user_name, hashed_password, email, tel, year, month, day)
-        flash("注册成功！", "success")
-        print(f"用户 '{user_name}' 注册成功。")
-        return redirect(url_for('register'))
+                if existing_user:
+                    flash("用户名已存在，请选择其他用户名。", "error")
+                    print(f"注册失败：用户名 '{user_name}' 已存在。")
+                    cursor.close()
+                    return redirect(url_for('register'))
+
+                # 插入新用户
+                cursor.execute("""
+                    INSERT INTO Users (user_name, password, email, tel, year, month, day)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
+                """, (user_name, password, email, tel, int(year), int(month), int(day)))
+                connection.commit()
+                cursor.close()
+
+            flash("注册成功！", "success")
+            print(f"用户 '{user_name}' 注册成功。")
+            return redirect(url_for('register'))
+
+        except Exception as e:
+            print(f"Error inserting user '{user_name}': {e}")
+            flash("注册时发生错误，请稍后再试。", "error")
+            return redirect(url_for('register'))
+
     return render_template('register.html')  # GET 请求，显示注册页面
+
 
 # 登录页面的路由
 @app.route('/login', methods=['GET', 'POST'])

@@ -91,7 +91,7 @@ def create_tables():
             CREATE TABLE IF NOT EXISTS Users (
                 user_id SERIAL PRIMARY KEY,
                 user_name VARCHAR(30) NOT NULL UNIQUE,
-                password VARCHAR(15) NOT NULL,
+                password VARCHAR(30) NOT NULL,
                 email VARCHAR(30),
                 tel VARCHAR(11),
                 year INT,

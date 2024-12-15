@@ -161,6 +161,16 @@
             transform: scale(1.05);
         }
 
+        /* 新增的返回主页按钮样式 */
+        .fixed-buttons .home-button {
+            background: #1db954;
+        }
+
+        .fixed-buttons .home-button:hover {
+            background-color: #17a74a;
+            transform: scale(1.05);
+        }
+
         /* Flash 消息样式 */
         .flashes {
             list-style: none;
@@ -275,9 +285,8 @@
 
     <!-- 固定右下角按钮 -->
     <div class="fixed-buttons">
-        <a href="/profile/{{ user_id }}" class="profile-button">我的资料</a>
-        <a href="/favorites/{{ user_name }}" class="favorites-button">我的收藏</a>
-        <a href="/community" class="community-button">社区</a> <!-- 保持一致的社区按钮 -->
+        <!-- 新增的返回主页按钮 -->
+        <a href="/home" class="home-button">返回主页</a>
     </div>
 </body>
 </html>

@@ -19,7 +19,8 @@
         }
 
         .register-container {
-            width: 350px;
+            width: 100%;
+            max-width: 400px; /* 增加最大宽度 */
             padding: 30px;
             background: #2c2c2e;
             border-radius: 15px;
@@ -33,10 +34,21 @@
             color: #1db954;
         }
 
-        input[type="text"], input[type="password"], input[type="email"], input[type="tel"] {
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #b3b3b3;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="tel"] {
             width: 100%;
             padding: 12px;
-            margin: 10px 0;
+            margin: 5px 0 15px 0;
             border: none;
             border-radius: 5px;
             box-sizing: border-box;
@@ -47,12 +59,15 @@
             transition: background-color 0.3s;
         }
 
-        input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="tel"]:focus {
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus {
             background-color: #4a4a4c;
         }
 
         select {
-            width: 32%;
+            width: 100%;
             padding: 12px;
             border: none;
             border-radius: 5px;
@@ -71,11 +86,25 @@
 
         .date-container {
             display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
+            flex-direction: column; /* 改为垂直排列 */
+            gap: 10px;
+            margin: 10px 0 20px 0;
         }
 
-        button {
+        .date-container label {
+            margin-bottom: 5px;
+        }
+
+        .date-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .date-row select {
+            flex: 1;
+        }
+
+        button[type="submit"] {
             width: 100%;
             padding: 12px;
             background-color: #1db954;
@@ -88,23 +117,23 @@
             margin-top: 10px;
         }
 
-        button:hover {
+        button[type="submit"]:hover {
             background-color: #17a74a;
         }
 
-        .register-button {
-            padding: 10px 20px;
-            background-color: #007bff;
+        .register-link {
             margin-top: 15px;
-            border-radius: 5px;
             font-size: 14px;
-            width: 100%;
-            transition: background-color 0.3s;
-            cursor: pointer;
         }
 
-        .register-button:hover {
-            background-color: #0056b3;
+        .register-link a {
+            color: #1db954;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .register-link a:hover {
+            color: #17a74a;
         }
 
         .modal {
@@ -145,10 +174,25 @@
 
         .flash-success {
             background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
         }
 
         .flash-error {
             background-color: #f44336;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 480px) {
+            .register-container {
+                padding: 20px;
+            }
         }
     </style>
 </head>
@@ -156,38 +200,66 @@
     <div class="register-container">
         <h2>注册</h2>
 
+        <!-- 显示闪现消息 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-message">
+                    {% for category, message in messages %}
+                        <div class="flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
         <!-- 注册表单 -->
         <form id="registerForm" action="/register" method="POST">
-            <input type="text" id="user_name" name="user_name" placeholder="用户名" required><br>
-            <input type="password" id="password" name="password" placeholder="密码" required><br>
-            <input type="email" id="email" name="email" placeholder="电子邮件" required><br>
-            <input type="tel" id="tel" name="tel" placeholder="电话号码" required><br>
+            <label for="user_name">用户名</label>
+            <input type="text" id="user_name" name="user_name" placeholder="请输入用户名" required>
+
+            <label for="password">密码</label>
+            <input type="password" id="password" name="password" placeholder="请输入密码" required>
+
+            <label for="confirm_password">确认密码</label>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="请再次输入密码" required>
+
+            <label for="email">电子邮件</label>
+            <input type="email" id="email" name="email" placeholder="请输入电子邮件" required>
+
+            <label for="tel">电话号码</label>
+            <input type="tel" id="tel" name="tel" placeholder="请输入电话号码" pattern="[0-9]{10,15}" title="请输入有效的电话号码" required>
 
             <div class="date-container">
-                <select id="year" name="year" required>
-                    <option value="">出生年份</option>
-                    {% for year in range(1900, 2025) %}
-                        <option value="{{ year }}">{{ year }}</option>
-                    {% endfor %}
-                </select>
+                <label>出生日期</label>
+                <div class="date-row">
+                    <select id="year" name="year" required>
+                        <option value="">年份</option>
+                        {% for year in range(1900, 2025) %}
+                            <option value="{{ year }}">{{ year }}</option>
+                        {% endfor %}
+                    </select>
 
-                <select id="month" name="month" required>
-                    <option value="">出生月份</option>
-                    {% for month in range(1, 13) %}
-                        <option value="{{ month }}">{{ month }}</option>
-                    {% endfor %}
-                </select>
+                    <select id="month" name="month" required>
+                        <option value="">月份</option>
+                        {% for month in range(1, 13) %}
+                            <option value="{{ month }}">{{ month }}</option>
+                        {% endfor %}
+                    </select>
 
-                <select id="day" name="day" required>
-                    <option value="">出生日期</option>
-                    {% for day in range(1, 32) %}
-                        <option value="{{ day }}">{{ day }}</option>
-                    {% endfor %}
-                </select>
+                    <select id="day" name="day" required>
+                        <option value="">日期</option>
+                        {% for day in range(1, 32) %}
+                            <option value="{{ day }}">{{ day }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
 
             <button type="submit">注册</button>
         </form>
+
+        <div class="register-link">
+            已有账号？ <a href="/login">登录</a>
+        </div>
     </div>
 
     <!-- 弹窗 -->
@@ -199,6 +271,17 @@
     </div>
 
     <script>
+        // 前端表单验证
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+
+            if (password !== confirmPassword) {
+                event.preventDefault();
+                alert('密码和确认密码不一致，请重新输入。');
+            }
+        });
+
         // 在页面加载时检查是否有闪现消息
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -214,7 +297,7 @@
 
                 // 弹窗显示
                 modal.style.display = 'flex';
-             {% endif %}
+            {% endif %}
         {% endwith %}
 
         // 点击“确定”按钮后跳转到相应页面
@@ -224,6 +307,14 @@
                 window.location.href = '/login';
             } else {
                 window.location.href = '/register';
+            }
+        }
+
+        // 点击模态框外部关闭模态框
+        window.onclick = function(event) {
+            const modal = document.getElementById('flashModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
             }
         }
     </script>
