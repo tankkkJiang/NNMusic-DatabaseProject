@@ -2,7 +2,7 @@
 
 ## 简介
 
-这是一个基于 openGauss 数据库和 Flask 后端的音乐播放软件，支持用户注册、登录、浏览和播放音乐，管理收藏以及编辑个人资料。
+这是一个基于 openGauss 数据库和 Flask 后端的音乐播放软件，支持用户注册、登录、浏览和播放音乐，管理收藏、编辑个人资料，以及在社区中发表观点。
 
 ## 功能
 
@@ -10,6 +10,7 @@
 - **音乐播放**：浏览和播放歌曲。
 - **收藏管理**：收藏喜欢的歌曲，方便访问。
 - **个人资料管理**：查看和编辑个人信息。
+- **社区发言**：在社区中发表观点，与其他用户互动。
 - **搜索与筛选**：根据关键词、艺术家、专辑、语言和风格进行搜索和筛选。
 
 ## 技术栈
@@ -27,6 +28,7 @@
 - **Users**：存储用户信息。
 - **Songs**：存储歌曲信息，关联艺术家和专辑。
 - **Favorites**：存储用户收藏的歌曲。
+- **CommunityComments**：存储用户在社区中的评论。
 
 数据库初始化和操作函数位于 `database.py`，包括表的创建、数据插入、用户验证、信息更新及各种查询功能。
 
@@ -34,7 +36,7 @@
 
 后端使用 Flask 框架，通过 `app.py` 实现：
 
-- **路由管理**：处理用户注册、登录、主页访问、个人资料查看与编辑、歌曲和专辑浏览等请求。
+- **路由管理**：处理用户注册、登录、主页访问、个人资料查看与编辑、歌曲和专辑浏览、以及社区发言等请求。
 - **用户会话管理**：使用 Flask 会话管理用户登录状态。
 - **数据交互**：通过 `database.py` 提供的函数与 openGauss 数据库交互，实现数据的增删改查。
 - **错误处理**：统一处理异常，确保系统稳定运行。
@@ -54,6 +56,7 @@
 - **get_artist_info_by_artist(connection, artist_id)**：获取艺术家名称和简介。
 - **get_user_info(user_name)**：获取指定用户的详细信息。
 - **get_user_favorites(connection, user_name)**：获取用户收藏的所有歌曲。
+- **get_all_comments(connection)**：获取所有社区评论，按时间倒序排列。
 - **get_unique_artist_countries(connection)**、**get_unique_artist_genders(connection)**、**get_unique_song_languages(connection)**、**get_unique_song_genres(connection)**：获取艺术家和歌曲的唯一筛选选项。
 
 ### 插入数据（insert_函数）
@@ -63,6 +66,7 @@
 - **insert_album(album_id, title, artist_id)**：插入新专辑数据。
 - **insert_song(title, artist_id, album_id, genre, audio_url, language)**：插入新歌曲数据。
 - **insert_favorites(user_name, song_name, artist_name)**：添加用户收藏的歌曲。
+- **insert_comment(user_id, content)**：插入用户在社区中的评论。
 
 ### 更新与删除
 
@@ -81,30 +85,30 @@
 
 1. **克隆项目**
 
-   ```bash
-   git clone https://github.com/你的用户名/音乐播放软件.git
-   cd 音乐播放软件
-   ```
+    ```bash
+    git clone https://github.com/你的用户名/音乐播放软件.git
+    cd 音乐播放软件
+    ```
 
 2. **配置数据库**
 
-   - 安装并配置 openGauss 数据库。
-   - 更新 `database.py` 中的数据库连接参数以匹配你的数据库设置。
-   - 初始化数据库并插入初始数据：
+    - 安装并配置 openGauss 数据库。
+    - 更新 `database.py` 中的数据库连接参数以匹配你的数据库设置。
+    - 初始化数据库并插入初始数据：
 
-     ```bash
-     python database.py
-     ```
+      ```bash
+      python database.py
+      ```
 
 3. **运行后端服务**
 
-   ```bash
-   python app.py
-   ```
+    ```bash
+    python app.py
+    ```
 
 4. **访问前端**
 
-   打开浏览器，访问 `http://localhost:5000` 开始使用音乐播放软件。
+    打开浏览器，访问 `http://localhost:5000` 开始使用音乐播放软件。
 
 ## 项目结构
 
@@ -123,7 +127,8 @@
 │   ├── album_songs.html
 │   ├── artists.html
 │   ├── artist_songs.html
-│   └── play.html
+│   ├── play.html
+│   └── community.html
 ├── static/
 │   ├── images/
 │   └── audio/
@@ -134,3 +139,4 @@
 
 1. **综合搜索与筛选功能**：用户可以通过关键词结合多种筛选条件（如国籍、性别、语言、风格）进行精准搜索，大幅提升查找效率和用户体验。
 2. **动态收藏管理**：实时添加或移除收藏歌曲，系统即时更新收藏状态，并在歌曲列表中动态显示，增强用户互动性。
+3. **社区互动**：用户可以在社区中发表自己的观点，与其他用户交流，增强平台的社交属性和用户粘性。

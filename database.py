@@ -34,7 +34,7 @@ def drop_all_tables():
         cursor = connection.cursor()
         commands = [
             '''
-            DROP TABLE IF EXISTS PlaylistSongs CASCADE
+            DROP TABLE IF EXISTS CommunityComments CASCADE
             ''',
             '''
             DROP TABLE IF EXISTS Playlists CASCADE
@@ -113,19 +113,21 @@ def create_tables():
             )
             ''',
             '''
-            CREATE TABLE IF NOT EXISTS Playlists (
-                playlist_id SERIAL PRIMARY KEY,
-                title VARCHAR(255) NOT NULL,
-                description TEXT
-            )
-            ''',
-            '''
             CREATE TABLE IF NOT EXISTS Favorites (
                 user_id INT NOT NULL,
                 song_id INT NOT NULL,
                 PRIMARY KEY (user_id, song_id),
                 FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
                 FOREIGN KEY (song_id) REFERENCES Songs(song_id) ON DELETE CASCADE
+            )
+            ''',
+            '''
+            CREATE TABLE IF NOT EXISTS CommunityComments (
+                comment_id SERIAL PRIMARY KEY,
+                user_id INT NOT NULL,
+                content TEXT NOT NULL,
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
             )
             '''
         ]
@@ -239,6 +241,29 @@ def get_user_info(user_name):
         cursor.execute("SELECT * FROM Users WHERE user_name = %s", (user_name,))
         user = cursor.fetchone()
         return user
+
+
+# 获取所有社区评论
+def get_all_comments(connection):
+    with connection.cursor() as cursor:
+        cursor.execute('''
+            SELECT cc.comment_id, u.user_name, cc.content, cc.timestamp
+            FROM CommunityComments cc
+            JOIN Users u ON cc.user_id = u.user_id
+            ORDER BY cc.timestamp DESC
+        ''')
+        return cursor.fetchall()
+
+
+# 插入新的社区评论
+def insert_comment(user_id, content):
+    with get_db_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute('''
+                INSERT INTO CommunityComments (user_id, content)
+                VALUES (%s, %s)
+            ''', (user_id, content))
+            connection.commit()
 
 
 # 获取用户收藏的歌曲

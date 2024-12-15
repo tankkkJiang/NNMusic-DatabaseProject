@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NNMusic - 社区</title>
+    <style>
+        /* 基础样式与 home.html 保持一致 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 顶部导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(18, 18, 18, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1db954;
+            text-decoration: none;
+        }
+
+        /* 主内容区 */
+        .main-container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 80px auto 30px auto; /* 顶部导航栏高度 + 底部间距 */
+        }
+
+        /* 发表评论表单 */
+        .post-comment {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
+        }
+
+        .post-comment h2 {
+            margin-top: 0;
+            color: #1db954;
+        }
+
+        .post-comment textarea {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            resize: vertical;
+            min-height: 100px;
+            background-color: #2a2a2a;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            margin-bottom: 10px;
+        }
+
+        .post-comment button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            background-color: #1db954;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            outline: none;
+        }
+
+        .post-comment button:hover {
+            background-color: #17a74a;
+        }
+
+        /* 评论列表 */
+        .comments {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .comments h2 {
+            margin-top: 0;
+            color: #1db954;
+        }
+
+        .comments ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comments li {
+            border-bottom: 1px solid #333;
+            padding: 15px 0;
+        }
+
+        .comments li:last-child {
+            border-bottom: none;
+        }
+
+        .comments li strong {
+            color: #1db954;
+        }
+
+        .comments li em {
+            color: #b3b3b3;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        .comments li p {
+            margin: 10px 0 0 0;
+            color: #ccc;
+            white-space: pre-wrap; /* 保留换行 */
+        }
+
+        /* 固定右下角按钮 */
+        .fixed-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .fixed-buttons a {
+            padding: 12px 20px;
+            background: linear-gradient(145deg, #6b6b6b, #000000);
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .fixed-buttons a:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Flash 消息样式 */
+        .flashes {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .flashes li {
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .flashes li.success {
+            background-color: #28a745;
+        }
+
+        .flashes li.error {
+            background-color: #dc3545;
+        }
+
+        .flashes li.warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 15px;
+            }
+
+            .main-container {
+                margin: 80px 10px 30px 10px;
+            }
+
+            .fixed-buttons a {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                flex-direction: column;
+                height: auto;
+                padding: 10px;
+            }
+
+            .navbar .logo {
+                margin-bottom: 10px;
+            }
+
+            .main-container {
+                margin: 80px 5px 30px 5px;
+            }
+
+            .fixed-buttons a {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div class="navbar">
+        <a href="/home" class="logo">NNMusic</a>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="main-container">
+        <!-- Flash 消息 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <!-- 发表评论表单 -->
+        <div class="post-comment">
+            <h2>发表你的观点</h2>
+            <form action="{{ url_for('community') }}" method="POST">
+                <textarea name="content" placeholder="请输入你的评论..." required></textarea>
+                <button type="submit">发布</button>
+            </form>
+        </div>
+
+        <!-- 评论列表 -->
+        <div class="comments">
+            <h2>最新评论</h2>
+            {% if comments %}
+                <ul>
+                    {% for comment in comments %}
+                        <li>
+                            <strong>{{ comment[1] }}</strong>
+                            <em>({{ comment[3].strftime('%Y-%m-%d %H:%M:%S') }})</em>
+                            <p>{{ comment[2] | e }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>暂无评论，快来抢占沙发吧！</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 固定右下角按钮 -->
+    <div class="fixed-buttons">
+        <a href="/profile/{{ user_id }}" class="profile-button">我的资料</a>
+        <a href="/favorites/{{ user_name }}" class="favorites-button">我的收藏</a>
+        <a href="/community" class="community-button">社区</a> <!-- 保持一致的社区按钮 -->
+    </div>
+</body>
+</html>

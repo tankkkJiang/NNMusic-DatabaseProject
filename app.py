@@ -188,6 +188,41 @@ def edit_profile(user_id):
 
     return render_template('edit_profile.html', user_info=user_info)
 
+# 新增社区页面路由
+@app.route('/community', methods=['GET', 'POST'])
+def community():
+    user_id = session.get('user_id')
+    user_name = session.get('user_name')
+
+    if not user_id or not user_name:
+        flash("请先登录。", "error")
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        content = request.form.get('content')
+        if content:
+            try:
+                db.insert_comment(user_id, content)
+                flash("评论已发布。", "success")
+            except Exception as e:
+                flash(f"发布评论失败: {e}", "error")
+        else:
+            flash("评论内容不能为空。", "warning")
+        return redirect(url_for('community'))
+
+    with db.get_db_connection() as conn:
+        try:
+            comments = db.get_all_comments(conn)
+        except Exception as e:
+            flash(f"加载评论失败: {e}", "error")
+            comments = []
+
+    return render_template('community.html',
+                           user_id=user_id,
+                           user_name=user_name,
+                           comments=comments)
+
+
 
 # 处理编辑个人资料的表单提交
 @app.route('/update_profile/<int:user_id>', methods=['POST'])
