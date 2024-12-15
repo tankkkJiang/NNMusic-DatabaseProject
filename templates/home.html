@@ -549,10 +549,6 @@
                             albumDiv.className = 'result-item';
                             albumDiv.innerHTML = `
                                 <a href="/album/${album.album_id}/songs" class="result-title">${album.title}</a>
-                                <div class="result-info">
-                                    <p>艺术家: ${album.artist_name}</p>
-                                    <p>歌曲数量: ${album.song_count || '未知'}</p>
-                                </div>
                             `;
                             albumList.appendChild(albumDiv);
                         });

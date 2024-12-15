@@ -140,6 +140,7 @@ def create_tables():
         finally:
             cursor.close()
 
+
 # -----------登录注册相关函数-----------------
 # 验证用户信息
 def validate_user(user_name, password, connection):
@@ -996,37 +997,37 @@ if __name__ == "__main__":
     insert_song('子弹列车', 5, 8, 'R&B', r'林俊杰/第二天堂(江南)/林俊杰 - 子弹列车.mp3', '国语')
 
     # Taylor Swift - 1989 专辑的歌曲
-    insert_song('Shake It Off', 10, 6, 'Pop', r'Taylor Swift/1989/Taylor Swift - Shake It Off.mp3', 'English')
+    insert_song('Shake It Off', 6, 10, 'Pop', r'Taylor Swift/1989/Taylor Swift - Shake It Off.mp3', 'English')
 
     # Adele - 25 专辑的歌曲
-    insert_song('Hello', 11, 7, 'Pop', r'Adele/25/Adele - Hello.mp3', 'English')
+    insert_song('Hello', 7, 11, 'Pop', r'Adele/25/Adele - Hello.mp3', 'English')
 
     # Jay Chou - Mojito 专辑的歌曲
-    insert_song('Mojito', 12, 8, 'Pop', r'Jay Chou/Mojito/Jay Chou - Mojito.mp3', 'Mandarin')
+    insert_song('Mojito', 8, 12, 'Pop', r'Jay Chou/Mojito/Jay Chou - Mojito.mp3', 'Mandarin')
 
     # Eminem - The Marshall Mathers LP 专辑的歌曲
-    insert_song('The Real Slim Shady', 13, 9, 'Hip-Hop',
+    insert_song('The Real Slim Shady', 9, 13, 'Hip-Hop',
                 r'Eminem/The Marshall Mathers LP/Eminem - The Real Slim Shady.mp3', 'English')
 
     # Billie Eilish - When We All Fall Asleep, Where Do We Go 专辑的歌曲
-    insert_song('Bad Guy', 14, 10, 'Pop',
+    insert_song('Bad Guy', 10, 14, 'Pop',
                 r'Billie Eilish/When We All Fall Asleep, Where Do We Go/Billie Eilish - Bad Guy.mp3', 'English')
 
     # Ariana Grande - Sweetener 专辑的歌曲
-    insert_song('No Tears Left to Cry', 15, 11, 'Pop',
+    insert_song('No Tears Left to Cry', 11, 15, 'Pop',
                 r'Ariana Grande/Sweetener/Ariana Grande - No Tears Left to Cry.mp3', 'English')
 
     # Ed Sheeran - Divide 专辑的歌曲
-    insert_song('Shape of You', 16, 12, 'Pop', r'Ed Sheeran/Divide/Ed Sheeran - Shape of You.mp3', 'English')
+    insert_song('Shape of You', 12, 16, 'Pop', r'Ed Sheeran/Divide/Ed Sheeran - Shape of You.mp3', 'English')
 
     # Bruno Mars - 24K Magic 专辑的歌曲
-    insert_song('24K Magic', 17, 13, 'Pop', r'Bruno Mars/24K Magic/Bruno Mars - 24K Magic.mp3', 'English')
+    insert_song('24K Magic', 13, 17, 'Pop', r'Bruno Mars/24K Magic/Bruno Mars - 24K Magic.mp3', 'English')
 
     # Shawn Mendes - Wonder 专辑的歌曲
-    insert_song('Wonder', 18, 14, 'Pop', r'Shawn Mendes/Wonder/Shawn Mendes - Wonder.mp3', 'English')
+    insert_song('Wonder', 14, 18, 'Pop', r'Shawn Mendes/Wonder/Shawn Mendes - Wonder.mp3', 'English')
 
     # Selena Gomez - Rare 专辑的歌曲
-    insert_song('Lose You to Love Me', 19, 15, 'Pop', r'Selena Gomez/Rare/Selena Gomez - Lose You to Love Me.mp3',
+    insert_song('Lose You to Love Me', 15, 19, 'Pop', r'Selena Gomez/Rare/Selena Gomez - Lose You to Love Me.mp3',
                 'English')
 
     # 添加用户
