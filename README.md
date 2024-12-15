@@ -86,8 +86,7 @@
 1. **克隆项目**
 
     ```bash
-    git clone https://github.com/你的用户名/音乐播放软件.git
-    cd 音乐播放软件
+    git clone https://github.com/tankkkJiang/NNMusic-DatabaseProject.git
     ```
 
 2. **配置数据库**
