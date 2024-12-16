@@ -172,21 +172,6 @@
             background-color: #17a74a;
         }
 
-        .flash-success {
-            background-color: #4caf50;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-
-        .flash-error {
-            background-color: #f44336;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
 
         /* 响应式设计 */
         @media (max-width: 480px) {
@@ -200,16 +185,6 @@
     <div class="register-container">
         <h2>注册</h2>
 
-        <!-- 显示闪现消息 -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-message">
-                    {% for category, message in messages %}
-                        <div class="flash-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
 
         <!-- 注册表单 -->
         <form id="registerForm" action="/register" method="POST">

@@ -13,7 +13,7 @@ def get_db_connection():
             database="postgres",
             user="admin",
             password="admin@123",
-            host="192.168.37.132",
+            host="192.168.37.133",
             port="7654",
             client_encoding="UTF8"
         )
@@ -792,8 +792,6 @@ def search_songs_with_filters(query=None, language=None, genre=None, connection=
         cursor.close()
 
 
-
-
 # -----------初始化-----------------
 if __name__ == "__main__":
     drop_all_tables()
@@ -1031,7 +1029,7 @@ if __name__ == "__main__":
                 'English')
 
     # 添加用户
-    insert_user('Tank', 'Tank2028085771', 'jzl@250.com', '1008611', '2003', '2', '30')
-    insert_user('x+x', 'x+x', 'x+x@163.com', '1008611', '2003', '2', '30')
-    insert_user('Bean_cock', 'Gong', 'Roman@163.com', '1008611', '2005', '2', '30')
-    insert_user('Bonjour', 'Bonjour', 'Bonjour@163.com', '1008611', '2003', '2', '30')
+    insert_user('Tank', 'Tank2028085771', 'jzl@250.com', '1008611', '2003', '2', '5')
+    insert_user('x+x', 'x+x', 'x+x@163.com', '1008611', '2003', '2', '5')
+    insert_user('Bean_cock', 'Gong', 'Roman@163.com', '1008611', '2005', '2', '5')
+    insert_user('Bonjour', 'Bonjour', 'Bonjour@163.com', '1008611', '2003', '2', '5')

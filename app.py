@@ -248,6 +248,7 @@ def community():
                            comments=comments)
 
 
+
 # 处理编辑个人资料的表单提交
 @app.route('/update_profile/<int:user_id>', methods=['POST'])
 def update_profile(user_id):
@@ -485,6 +486,7 @@ def artist_songs(artist_id):
                            artist_bio=artist_bio,
                            user_id=user_id,
                            user_name=user_name)
+
 
 
 # -----------搜索功能页面-----------------
